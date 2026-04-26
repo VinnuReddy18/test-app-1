@@ -1,0 +1,33 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.layer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  font-size: 2em;
+}
+
+.static-content .layer-content {
+  padding: 50px 0;
+}
+
+.toggle-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.toggle-button:hover {
+  background-color: #555;
+}
