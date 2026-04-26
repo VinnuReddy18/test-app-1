@@ -1,33 +1,25 @@
 .App {
-  font-family: sans-serif;
-  text-align: center;
-}
-
-.layer-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: white;
-  font-size: 2em;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.static-content .layer-content {
-  padding: 50px 0;
+main {
+  flex: 1;
+  padding: 20px;
 }
 
-.toggle-button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 10px 20px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
+/* Optimize image loading */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  loading: lazy;
 }
 
-.toggle-button:hover {
-  background-color: #555;
+/* Ensure responsive design */
+@media (max-width: 768px) {
+  main {
+    padding: 10px;
+  }
 }

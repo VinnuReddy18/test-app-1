@@ -1,52 +1,36 @@
-import React, { useState } from 'react';
-import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import React, { Suspense, useState, useEffect } from 'react';
 import './App.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import StaticFallback from './components/StaticFallback';
+
+// Lazy load non-critical components
+const Portfolio = React.lazy(() => import('./components/Portfolio'));
+const ContactForm = React.lazy(() => import('./components/ContactForm'));
 
 function App() {
-  const [animationsEnabled, setAnimationsEnabled] = useState(true);
+  const [isJavaScriptEnabled, setIsJavaScriptEnabled] = useState(true);
 
-  const toggleAnimations = () => {
-    setAnimationsEnabled(!animationsEnabled);
-  };
+  useEffect(() => {
+    // Check if JavaScript is enabled
+    setIsJavaScriptEnabled(true);
+  }, []);
+
+  if (!isJavaScriptEnabled) {
+    // Render static fallback if JavaScript is disabled
+    return <StaticFallback />;
+  }
 
   return (
     <div className="App">
-      <button onClick={toggleAnimations} className="toggle-button">
-        {animationsEnabled ? 'Disable Animations' : 'Enable Animations'}
-      </button>
-      {animationsEnabled ? (
-        <Parallax pages={3} style={{ top: '0', left: '0' }}>
-          <ParallaxLayer
-            offset={0}
-            speed={0.5}
-            style={{ backgroundColor: '#ff6d6d' }}
-          >
-            <div className="layer-content">Welcome to Our Landing Page</div>
-          </ParallaxLayer>
-
-          <ParallaxLayer
-            offset={1}
-            speed={0.5}
-            style={{ backgroundColor: '#ffaf40' }}
-          >
-            <div className="layer-content">Explore Our Features</div>
-          </ParallaxLayer>
-
-          <ParallaxLayer
-            offset={2}
-            speed={0.5}
-            style={{ backgroundColor: '#ffd700' }}
-          >
-            <div className="layer-content">Contact Us</div>
-          </ParallaxLayer>
-        </Parallax>
-      ) : (
-        <div className="static-content">
-          <div className="layer-content">Welcome to Our Landing Page</div>
-          <div className="layer-content">Explore Our Features</div>
-          <div className="layer-content">Contact Us</div>
-        </div>
-      )}
+      <Header />
+      <main>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Portfolio />
+          <ContactForm />
+        </Suspense>
+      </main>
+      <Footer />
     </div>
   );
 }
